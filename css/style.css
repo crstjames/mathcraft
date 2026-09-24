@@ -297,7 +297,6 @@ table.ratio-table td.missing { background: #ffef9a; color: #b35900; }
 .choice-btn.wrong { background: #b33; }
 .choice-btn:disabled { cursor: default; }
 
-.quiz-hint { margin-top: 12px; background: #fff7c2; border: 3px solid #b39b00; padding: 8px 12px; font-size: 15px; color: #4a3f00; }
 .quiz-feedback { margin-top: 12px; padding: 10px 12px; border: 3px solid #000; font-size: 16px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .quiz-feedback.good { background: #c8f5b8; color: #134d06; }
 .quiz-feedback.bad { background: #ffd0d0; color: #6b0000; }
@@ -318,6 +317,7 @@ table.ratio-table td.missing { background: #ffef9a; color: #b35900; }
 .book-head { display: flex; align-items: center; gap: 8px; font-size: 16px; border-bottom: 2px dashed #b89a68; padding-bottom: 6px; margin-bottom: 8px; flex-wrap: wrap; }
 .book-head img { width: 22px; height: 22px; }
 .book-sub { font-size: 12px; font-weight: normal; color: #6b4a2b; margin-left: auto; }
+.book-tip { font-size: 15px; line-height: 1.4; margin-bottom: 10px; padding: 6px 10px; background: rgba(255,255,255,.5); border-left: 4px solid #b89a68; }
 .book-steps { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 8px; font-size: 17px; line-height: 2; }
 /* Future steps stay hidden: they often contain earlier steps' answers. */
 .book-steps li.locked { display: none; }

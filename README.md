@@ -39,8 +39,8 @@ at the last checkpoint. Stars are awarded by mistakes.
 
 ### Book & Quill
 
-Every question has an optional **Book & Quill** worksheet ("Need help?" button or B).
-It breaks the problem into steps ("Count the coal blocks: [ ]") shown one at a time, and
+Every question has a **Hint: Book & Quill** button (H). It opens a book with a tip at
+the top, then breaks the problem into steps ("Count the coal blocks: [ ]") shown one at a time, and
 each blank is checked. Mistakes in the book cost no hearts, and the answer choices stay
 available the whole time, so kids who don't need it can just answer.
 
@@ -51,7 +51,7 @@ of the ratio trick used there (tables, unit rates, simplifying...). Open it from
 book button in the game, the pause menu, or the world map.
 
 **Controls:** ← → / A D to move, Space / W / ↑ to jump, E to use, Esc to pause.
-In a quiz: 1-4 to answer, H for a hint, B for the Book & Quill, Enter to check a step. Touch devices get on-screen buttons.
+In a quiz: 1-4 to answer, H for the Book & Quill hint, Enter to check a step. Touch devices get on-screen buttons.
 
 ## Saves
 

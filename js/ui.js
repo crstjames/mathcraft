@@ -311,8 +311,6 @@ BQ.UI = (() => {
     $('#quiz-visual').innerHTML = q.visual;
     $('#quiz-choices').innerHTML = q.choices.map((c, i) =>
       `<button class="choice-btn" data-choice="${escapeHTML(c)}"><span class="key">${i + 1}</span>${escapeHTML(c)}</button>`).join('');
-    $('#quiz-hint').hidden = true;
-    $('#quiz-hint').innerHTML = q.hint;
     $('#quiz-feedback').hidden = true;
     $('#quiz-book-btn').hidden = !q.steps;
     // If the kid had the worksheet open, keep it open for the next problem.
@@ -322,11 +320,12 @@ BQ.UI = (() => {
   }
 
   // ---------- Book & Quill ----------
-  // An optional worksheet: the problem broken into steps, shown one at a time, each blank checked.
+  // The hint: a tip plus the problem broken into steps, shown one at a time, each blank checked.
   // Mistakes in the book never cost hearts, and the answer choices stay usable the whole time.
   function renderBook() {
     $('#book-quill').src = BQ.Art.icon('quill');
-    $('#book-sub').textContent = 'Work it out step by step. Mistakes here cost no hearts.';
+    $('#book-sub').textContent = 'Mistakes in here cost no hearts.';
+    $('#book-tip').innerHTML = `<b>Tip:</b> ${quiz.q.hint}`;
     $('#book-steps').innerHTML = quiz.q.steps.map((step, i) => {
       const html = escapeHTML(step).replace(/\{\{(\d+)\}\}/g, (_, n) =>
         `<input class="blank" inputmode="numeric" autocomplete="off" maxlength="4" data-answer="${n}" aria-label="blank">`);
@@ -368,7 +367,7 @@ BQ.UI = (() => {
     });
     if (!allOk) {
       BQ.Audio.play('click');
-      $('#book-msg').textContent = 'Not quite. Fix the red box and check again. Tip: press Hint if you are stuck!';
+      $('#book-msg').textContent = 'Not quite. Fix the red box and check again. Read the tip at the top if you are stuck!';
       focusBlank();
       return;
     }
@@ -452,11 +451,6 @@ BQ.UI = (() => {
     quiz = null;
   }
 
-  function showHint() {
-    if (!quiz) return;
-    $('#quiz-hint').hidden = false;
-  }
-
   // ---------- Recipe Book ----------
   function recipePages() {
     return BQ.Levels.order.flatMap(levelId => {
@@ -528,7 +522,6 @@ BQ.UI = (() => {
       startLevel(game.level.id);
     },
     'quit-map': leaveGame,
-    'quiz-hint': showHint,
     'quiz-continue': quizContinue,
     'quiz-leave': quizLeave,
     'quiz-book': toggleBook,
@@ -585,8 +578,7 @@ BQ.UI = (() => {
         const btns = $$('#quiz-choices .choice-btn');
         const b = btns[Number(e.code.slice(5)) - 1];
         if (b) answer(b.dataset.choice);
-      } else if (e.code === 'KeyH') showHint();
-      else if (e.code === 'KeyB') toggleBook();
+      } else if (e.code === 'KeyH' || e.code === 'KeyB') toggleBook();
       else if (e.code === 'Escape') quizLeave();
       else if (quiz.answered && (e.code === 'Enter' || e.code === 'Space')) { e.preventDefault(); quizContinue(); }
       return;
