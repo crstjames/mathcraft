@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Mathcraft</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- TITLE -->
+  <section id="screen-title" class="screen active">
+    <canvas id="title-bg"></canvas>
+    <div class="title-content">
+      <h1 class="logo"><span>MATH</span><span>CRAFT</span></h1>
+      <p class="tagline">Math Adventures</p>
+      <div class="splash">Now with ratios!</div>
+      <div class="menu">
+        <button class="mc-btn big" data-action="start">Start</button>
+        <button class="mc-btn" data-action="toggle-sound" id="title-sound">Sound: On</button>
+      </div>
+    </div>
+    <footer class="fine-print">An unofficial fan-style game. Not affiliated with Mojang or Microsoft.</footer>
+  </section>
+
+  <!-- PLAYER SELECT -->
+  <section id="screen-players" class="screen dirt-bg">
+    <div class="panel wide">
+      <h2>Choose Your Player</h2>
+      <div id="player-list" class="player-list"></div>
+      <div class="row">
+        <button class="mc-btn" data-action="back-title">Back</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATE PLAYER -->
+  <section id="screen-create" class="screen dirt-bg">
+    <div class="panel wide">
+      <h2>Create a New Player</h2>
+      <div class="create-layout">
+        <div class="preview-box">
+          <canvas id="create-preview" width="160" height="240"></canvas>
+          <button class="mc-btn small" data-action="randomize">Surprise Me</button>
+        </div>
+        <div class="create-options">
+          <label class="field">
+            <span>Name</span>
+            <input id="player-name" type="text" maxlength="16" placeholder="Your name" autocomplete="off">
+          </label>
+          <div class="field"><span>Skin</span><div class="swatches" data-part="skin"></div></div>
+          <div class="field"><span>Hair</span><div class="swatches" data-part="hair"></div></div>
+          <div class="field"><span>Hair Style</span><div class="choices" data-part="hairStyle"></div></div>
+          <div class="field"><span>Shirt</span><div class="swatches" data-part="shirt"></div></div>
+          <div class="field"><span>Pants</span><div class="swatches" data-part="pants"></div></div>
+        </div>
+      </div>
+      <p id="create-error" class="error" hidden></p>
+      <div class="row">
+        <button class="mc-btn" data-action="back-players">Cancel</button>
+        <button class="mc-btn green" data-action="create-player">Create Player</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORLD MAP -->
+  <section id="screen-map" class="screen dirt-bg">
+    <div class="panel wide">
+      <div class="map-header">
+        <canvas id="map-avatar" width="48" height="72"></canvas>
+        <div>
+          <h2 id="map-greeting">Hi!</h2>
+          <div id="map-stats" class="stats-line"></div>
+        </div>
+      </div>
+      <h3>Pick a World</h3>
+      <div id="level-list" class="level-list"></div>
+      <div class="row">
+        <button class="mc-btn" data-action="open-recipes" id="map-recipes">Recipe Book</button>
+        <button class="mc-btn" data-action="back-players">Switch Player</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section id="screen-game" class="screen">
+    <canvas id="game-canvas"></canvas>
+    <div class="hud">
+      <div class="hud-left">
+        <div id="hud-hearts" class="hearts"></div>
+        <div class="hud-emeralds"><img id="hud-emerald-icon" alt=""><span id="hud-emeralds">0</span></div>
+      </div>
+      <div class="hud-center">
+        <div id="hud-level" class="hud-level"></div>
+        <div id="hud-progress" class="hud-progress"></div>
+      </div>
+      <div class="hud-right">
+        <button class="mc-btn small hud-book" data-action="open-recipes" aria-label="Recipe Book" title="Recipe Book"><img class="book-icon" alt=""></button>
+        <button class="mc-btn small" data-action="pause" aria-label="Pause">II</button>
+      </div>
+    </div>
+    <div id="toast" class="toast" hidden></div>
+
+    <div class="touch-controls">
+      <div class="dpad">
+        <button data-key="left" aria-label="Left">◀</button>
+        <button data-key="right" aria-label="Right">▶</button>
+      </div>
+      <div class="actions">
+        <button data-key="use" aria-label="Use">E</button>
+        <button data-key="jump" aria-label="Jump">▲</button>
+      </div>
+    </div>
+
+    <!-- Question modal -->
+    <div id="quiz" class="overlay" hidden>
+      <div class="quiz-card">
+        <div class="quiz-head">
+          <img id="quiz-icon" alt="">
+          <div class="quiz-title-wrap">
+            <div id="quiz-title" class="quiz-title"></div>
+            <div id="quiz-pips" class="pips"></div>
+          </div>
+          <button class="mc-btn small" data-action="quiz-leave" title="Leave (Esc)">Leave</button>
+        </div>
+        <div id="quiz-speech" class="speech"></div>
+        <div id="quiz-prompt" class="quiz-prompt"></div>
+        <div id="quiz-visual" class="quiz-visual"></div>
+        <div id="quiz-book" class="book" hidden>
+          <div class="book-head"><img id="book-quill" alt=""><span>Book &amp; Quill</span><span id="book-sub" class="book-sub"></span></div>
+          <ol id="book-steps" class="book-steps"></ol>
+          <div id="book-msg" class="book-msg"></div>
+        </div>
+        <div id="quiz-choices" class="quiz-choices"></div>
+        <div id="quiz-hint" class="quiz-hint" hidden></div>
+        <div id="quiz-feedback" class="quiz-feedback" hidden>
+          <div id="quiz-feedback-text"></div>
+          <button class="mc-btn green" data-action="quiz-continue">Continue</button>
+        </div>
+        <div class="quiz-foot">
+          <div class="quiz-foot-btns">
+            <button class="mc-btn small" data-action="quiz-hint">Hint (H)</button>
+            <button class="mc-btn small book-btn" data-action="quiz-book" id="quiz-book-btn"><img class="quill-icon" alt="">Need help? Book &amp; Quill (B)</button>
+          </div>
+          <span class="keys-tip">Press 1-4 to answer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pause -->
+    <div id="pause" class="overlay" hidden>
+      <div class="panel">
+        <h2>Game Paused</h2>
+        <div class="menu">
+          <button class="mc-btn" data-action="resume">Back to Game</button>
+          <button class="mc-btn" data-action="open-recipes">Recipe Book</button>
+          <button class="mc-btn" data-action="toggle-sound" id="pause-sound">Sound: On</button>
+          <button class="mc-btn" data-action="restart-level">Restart Level</button>
+          <button class="mc-btn" data-action="quit-map">Save &amp; Quit to Map</button>
+        </div>
+        <p class="controls-help">
+          <b>Move:</b> ← → or A D &nbsp; <b>Jump:</b> Space / W / ↑ &nbsp; <b>Use:</b> E
+        </p>
+      </div>
+    </div>
+
+    <!-- Intro / complete -->
+    <div id="message" class="overlay" hidden>
+      <div class="panel">
+        <h2 id="message-title"></h2>
+        <div id="message-body"></div>
+        <div id="message-buttons" class="menu"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recipe Book: pages unlock as stations are cleared -->
+  <div id="recipes" class="overlay top" hidden>
+    <div class="recipe-book">
+      <div class="rb-spread">
+        <div class="rb-page" id="rb-left"></div>
+        <div class="rb-page" id="rb-right"></div>
+      </div>
+      <div class="rb-nav">
+        <button class="mc-btn small" data-action="rb-prev" aria-label="Previous pages">◀</button>
+        <span id="rb-count"></span>
+        <button class="mc-btn small" data-action="rb-next" aria-label="Next pages">▶</button>
+        <button class="mc-btn small" data-action="close-recipes">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/levels/ratio-ridge.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
